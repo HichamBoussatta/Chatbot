@@ -77,5 +77,5 @@ elif option == "6. Image Analysis":
     if uploaded_image is not None:
         if st.button("Analyze Image"):
             output = analyze_image(uploaded_image)
-            st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+            st.image(uploaded_image, caption="Uploaded Image", use_container_width=True)
             st.success(output)
