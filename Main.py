@@ -1,5 +1,6 @@
 import streamlit as st 
 import google.generativeai as genai
+from PIL import Image
 
 # API Configuration using Streamlit Secrets
 api_key = st.secrets["API_KEY"]
@@ -22,6 +23,11 @@ def sentiment_analysis(text):
 def text_translation(text, target_language):
     return model.generate_content(f'Translate this text to {target_language}: {text}').text
 
+def analyze_image(uploaded_image):
+    image = Image.open(uploaded_image)
+    response = model.generate_content(["Describe this image in detail:", image])
+    return response.text
+    
 # Streamlit UI
 st.title("🧠 HBAi")
 
@@ -30,7 +36,8 @@ option = st.sidebar.radio("Choose a function:", [
     "2. Text Summarization",
     "3. Question Answering",
     "4. Sentiment Analysis",
-    "5. Text Translation"
+    "5. Text Translation",
+    "6. Image Analysis" 
 ])
 
 if option == "1. Text Generation":
@@ -64,3 +71,11 @@ elif option == "5. Text Translation":
     if st.button("Translate"):
         output = text_translation(text, lang)
         st.success(output)
+        
+elif option == "6. Image Analysis":
+    uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+    if uploaded_image is not None:
+        if st.button("Analyze Image"):
+            output = analyze_image(uploaded_image)
+            st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+            st.success(output)
