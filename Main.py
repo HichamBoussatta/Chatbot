@@ -12,22 +12,22 @@ def generate_text(prompt):
     return model.generate_content(prompt).text
 
 def text_summarization(text):
-    return model.generate_content(f'Summarize this: {text}').text
+    return model.generate_content(f"Summarize this: {text}").text
 
 def question_answering(context, question):
-    return model.generate_content(f'Question: {question} Context: {context}').text
+    return model.generate_content(f"Question: {question} Context: {context}").text
 
 def sentiment_analysis(text):
-    return model.generate_content(f'Analyze the sentiment of this text: {text}').text
+    return model.generate_content(f"Analyze the sentiment of this text: {text}").text
 
 def text_translation(text, target_language):
-    return model.generate_content(f'Translate this text to {target_language}: {text}').text
+    return model.generate_content(f"Translate this text to {target_language}: {text}").text
 
 def analyze_image(uploaded_image):
     image = Image.open(uploaded_image)
     response = model.generate_content(["Describe this image in detail:", image])
     return response.text
-    
+
 # Streamlit UI
 st.title("🧠 HBAi")
 
@@ -37,7 +37,7 @@ option = st.sidebar.radio("Choose a function:", [
     "3. Question Answering",
     "4. Sentiment Analysis",
     "5. Text Translation",
-    "6. Image Analysis" 
+    "6. Image Analysis"
 ])
 
 if option == "1. Text Generation":
@@ -71,7 +71,7 @@ elif option == "5. Text Translation":
     if st.button("Translate"):
         output = text_translation(text, lang)
         st.success(output)
-        
+
 elif option == "6. Image Analysis":
     uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
     if uploaded_image is not None:
